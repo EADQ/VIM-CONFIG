@@ -39,6 +39,7 @@ Plug 'tpope/vim-surround' "Me ayuda a encerrar dentro de una etiqueta o caracter
 Plug 'itchyny/lightline.vim' "Me da un status para la barra y me indica tipo de cosas que estan pasando en el archivo
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } "Me instala unos archivos binarios que necesito tener en mi computadora
 Plug 'junegunn/fzf' "Me ayuda a buscar textos, variables en otros archivos y me lleva hasta donde estan estas definiciones
+Plug 'mattn/emmet-vim' "Autocompletado de HTML y de CSS para un mas facil manejo
 
 
 call plug#end()
