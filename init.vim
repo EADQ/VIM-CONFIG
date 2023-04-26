@@ -1,5 +1,3 @@
-
-
 "SETEOS BASICOS DE NVIM
 syntax on
 
@@ -21,6 +19,7 @@ set cursorline
 set termguicolors
 set splitbelow
 set splitright
+:nnoremap a <Esc>
 
 "LLAMADO DE LOS PLUGINS
 "..................................................................................................................................
@@ -39,19 +38,22 @@ Plug 'scrooloose/nerdcommenter' "Puedo realizar comentarios sobre el codigo en d
 Plug 'neoclide/coc.nvim', {'branch': 'release'} "Con esto puedo jalar lengajes de progra para autocompletar
 Plug 'tpope/vim-surround' "Me ayuda a encerrar dentro de una etiqueta o caracter especial palabras o codigo
 Plug 'itchyny/lightline.vim' "Me da un status para la barra y me indica tipo de cosas que estan pasando en el archivo
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } "Me instala unos archivos binarios que necesito tener en mi computadora
-Plug 'junegunn/fzf' "Me ayuda a buscar textos, variables en otros archivos y me lleva hasta donde estan estas definiciones
-Plug 'mattn/emmet-vim' "Autocompletado de HTML y de CSS para un mas facil manejo
-
-
+Plug 'mattn/emmet-vim' "Me ayuda a realizar autocompletados para archivos HTML y CSS
+Plug  'othree/html5.vim' "Este plugin me aguanta tener archivos css y javascript dentro de mi html
+Plug 'ternjs/tern_for_vim', {'do':'npm install'} "Autocompletado de JS con varias librerias escribir Ctrl+x y despues Ctrl+O para abrir el panel de autocompletado
+Plug 'dense-analysis/ale' 
+Plug 'jlanzarotta/bufexplorer' "Explorador de Buffers
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' } "TEMA TOKYIO NIGHT
+Plug 'ThePrimeagen/vim-be-good' "Es para practicar ejercicios del uso de VIM
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 call plug#end()
 
 
-
-
 "CONFIGURACION DE COC
+"...............................................................................................................................................
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
-" unicode characters in the file autoload/float.vim
+"" unicode characters in the file autoload/float.vim
 set encoding=utf-8
 
 " TextEdit might fail if hidden is not set.
@@ -61,7 +63,7 @@ set hidden
 set nobackup
 set nowritebackup
 
-" Give more space for displaying messages.
+" rive more space for displaying messages.
 set cmdheight=2
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
@@ -208,23 +210,35 @@ nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
 " Find symbol of current document.
 nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
 " Search workspace symbols.
-nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+"nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
 " Do default action for next item.
 nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
-nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
-
-"...............................................................................................................................................
-
+"nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 "SETEO DE LOS TEMAS
 
-set background=dark
-let gruvbox_contrast_dark='soft'
-colorscheme gruvbox
+"GRUVBOX
+"...................................................................................................................................
+"..................................................................................................................................."
 
+"set background=dark
+"let gruvbox_contrast_dark='soft'
+"colorscheme gruvbox
+
+"TOKYIO NIGHT
+"...................................................................................................................................
+"...................................................................................................................................
+
+colorscheme tokyonight
+
+" There are also colorschemes for the different styles
+"colorscheme tokyonight-night
+colorscheme tokyonight-storm
+"colorscheme tokyonight-day
+"colorscheme tokyonight-moon
 
 "MAPS
 "...................................................................................................................................
@@ -258,12 +272,15 @@ nnoremap <leader>t :split<CR>:terminal<CR>:resize 50 <CR>
 nnoremap <leader>o :only <CR>
 
 "PARA ABRIR UNA NUEVA VENTANA PARALELA
-nnoremap <leader>v :vsp <CR>
+noremap <leader>v :vsp <CR>
+noremap <leader>h :sp <CR>
+noremap <leader>vv <c-w>v <CR>
 
 "NERD COMMENTER
 "<leader>c<leader>   se deja de esta manera asi porque es el default
+
 "EASY MOTION	
-nmap<leader>s <Plug>(easymotion-s2)
+nmap <leader>s <Plug>(easymotion-s2)
 
 "KEYS FOR GO TO (NAVEGAR ENTRE ARCHIVOS)
 nmap <silent> gd <Plug>(coc-definition)
@@ -271,20 +288,27 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
-"BUFFERS 
-map <leader>ob :Buffers<cr>
+"BUFFERS
+"\<Leader\>be normal open
+
+"\<Leader\>bt toggle open / close
+
+"\<Leader\>bs force horizontal split open
+
+"\<Leader\>bv force vertical split open
 
 "FASTER SCROLLING
-nnoremap <C-j> 10<C-e>
-nnoremap <C-k> 10<C-y>
+nnoremap <C-j> 10j<C-e>
+nnoremap <C-k> 10k<C-y>
 
 "VIM SURROUND ESTE COMANDO SE USA: ESPACIO S MAYUSCULA Y TODO LO QUE QUIERA
 "ENVOLVER EN MODO VISUAL Y EL CARACTER QUE SE UTILIZARA
 xmap s <Plug>VSurround  
 
 "FZF 
-"map <leader>fz :Files<CR>
-"map <leader>ag :Ag<CR>
+"nnoremap <silent> <C-f> :Files<CR>
+map <leader>fz :Files<CR>
+map <leader>ag :Ag<CR>
 
 
 "EJECUCION DE LOS DIFERENTES PROGRAMAS
@@ -301,11 +325,14 @@ map <leader>jj :sp<CR>:term java % <CR>
 map <leader>x :sp<CR>:term dotnet run % <CR>
 
 "EMMET CONFIGURATION 
-".................................................................................................................................. ..................................................................................................................................
+"..................................................................................................................................
+"..................................................................................................................................
 
 let g:user_emmet_leader_key=','
 
-".................................................................................................................................. ..................................................................................................................................
+"..................................................................................................................................
+"..................................................................................................................................
+
 "HTML5 PLUGGIN CONFIG 
 "..................................................................................................................................
 "..................................................................................................................................
@@ -321,3 +348,15 @@ let g:html5_microdata_attributes_complete = 0
 
 "Disable WAI-ARIA attribute support:
 let g:html5_aria_attributes_complete = 0
+
+"AUTOCOMPLEATO PYTHON Y JAVASCRIPT 
+"..................................................................................................................................
+".................................................................................................................................
+
+" Use <c-space> to trigger completion.
+"if &filetype == "javascript" || &filetype == "python"
+  "inoremap <c-space> <C-x><C-u>
+"else
+  inoremap <silent><expr> <c-space> coc#refresh()
+"endif
+
