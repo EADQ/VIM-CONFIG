@@ -18,8 +18,14 @@ set showmatch
 set cursorline
 set termguicolors
 set splitbelow
-set splitright
+set splitright "Last
+set autoindent
+set smartindent
+set expandtab
+set tabstop=2
+set shiftwidth=2
 :nnoremap a <Esc>
+
 
 "LLAMADO DE LOS PLUGINS
 "..................................................................................................................................
@@ -47,6 +53,7 @@ Plug 'folke/tokyonight.nvim', { 'branch': 'main' } "TEMA TOKYIO NIGHT
 Plug 'ThePrimeagen/vim-be-good' "Es para practicar ejercicios del uso de VIM
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'neoclide/coc-snippets', "Herramienta para el autocompletado
 call plug#end()
 
 
@@ -218,6 +225,44 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 "nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
+
+" Configuraciones para CoC
+set completeopt=menu,menuone,noselect
+let g:coc_global_extensions = [
+  \ 'coc-snippets',
+  \ 'coc-pairs',
+  \ 'coc-tsserver',
+  \ 'coc-python',
+  \ 'coc-css',
+  \ 'coc-vimlsp'
+\]
+
+" Si el menú de autocompletado está abierto...
+" TAB seleccionará la opción siguiente.
+" Shift-TAB seleccionará la opción anterior.
+" ENTER seleccionará la opción actual.
+" ESCAPE cerrará el menú.
+"inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+"inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
+"inoremap <expr> <CR> pumvisible() ? coc#_select_confirm() : "\<CR>"
+"inoremap <expr> <ESC> pumvisible() ? coc#_close_popup() : "\<ESC>"
+
+let g:coc_config = { 'suggest.noselect': v:false }
+"
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ?
+      \ "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+    function! s:check_back_space() abort
+      let col = col('.') - 1
+      return !col || getline('.')[col - 1]  =~# '\s'
+    endfunction
+
+    let g:coc_snippet_next = '<tab>'
+
 "SETEO DE LOS TEMAS
 
 "GRUVBOX
@@ -232,7 +277,7 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 "...................................................................................................................................
 "...................................................................................................................................
 
-colorscheme tokyonight
+"colorscheme tokyonight
 
 " There are also colorschemes for the different styles
 "colorscheme tokyonight-night
